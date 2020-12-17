@@ -29,7 +29,7 @@ export default {
         {
           title: "分类页",
           icon: "search",
-          to: "classfiy",
+          to: "classify",
           dot: false
         },
         {

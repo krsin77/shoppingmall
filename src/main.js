@@ -5,6 +5,7 @@ import store from "./store";
 
 import "amfe-flexible";
 import {
+  Toast,
   NavBar,
   Tabbar,
   TabbarItem,
@@ -16,9 +17,18 @@ import {
   Card,
   List,
   Sidebar,
-  SidebarItem
+  SidebarItem,
+  Cell,
+  CellGroup,
+  GoodsAction,
+  GoodsActionIcon,
+  GoodsActionButton,
+  Sku,
+  Field,
+  Button
 } from "vant";
 
+Vue.use(Toast);
 Vue.use(NavBar);
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
@@ -31,6 +41,14 @@ Vue.use(Card);
 Vue.use(List);
 Vue.use(Sidebar);
 Vue.use(SidebarItem);
+Vue.use(Cell);
+Vue.use(CellGroup);
+Vue.use(GoodsAction);
+Vue.use(GoodsActionIcon);
+Vue.use(GoodsActionButton);
+Vue.use(Sku);
+Vue.use(Field);
+Vue.use(Button);
 
 import "./assets/css/style.stylus";
 

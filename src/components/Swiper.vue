@@ -4,7 +4,7 @@
     :autoplay="autoplay"
     :indicatorColor="indicatorColor"
   >
-    <van-swipe-item v-for="item in swipeList" :key="item">
+    <van-swipe-item v-for="item in swiperList" :key="item">
       <img :src="item" alt="" />
     </van-swipe-item>
   </van-swipe>
@@ -15,7 +15,7 @@ export default {
   props: {
     autoplay: Number,
     indicatorColor: String,
-    swipeList: Array
+    swiperList: Array
   }
 };
 </script>

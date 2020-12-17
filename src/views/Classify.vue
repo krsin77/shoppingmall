@@ -20,16 +20,22 @@
       </van-sidebar>
 
       <div class="classify-right">
-        <p v-for="item in classifyList" :key="item.productId">
-          {{ item.title }}
-        </p>
+        <div
+          class="classify-item"
+          v-for="item in classifyList"
+          :key="item.productId"
+          @click="goToDetail(item.productId)"
+        >
+          <img :src="item.imgUrl" alt="" />
+          <p>{{ item.title }}</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import { getClassifyListApi } from "../utils/api";
+import { getClassifyListApi } from "../utils/api";
 
 export default {
   data() {
@@ -91,15 +97,19 @@ export default {
     this.$store.dispatch("getClassifyList", { type: this.type });
   },
   methods: {
-    // async getClassifyList() {
-    //   const res = await getClassifyListApi({
-    //     type: this.type
-    //   });
-    //   this.classifyList = res.result;
-    // },
+    async getClassifyList() {
+      const res = await getClassifyListApi({
+        type: this.type
+      });
+      this.classifyList = res.result;
+      console.log(res);
+    },
     itemClick(index) {
       this.type = this.list[index].type;
       this.$store.dispatch("getClassifyList", { type: this.type });
+    },
+    goToDetail(id) {
+      this.$router.push("./detail/" + id);
     }
   }
 };
@@ -115,5 +125,20 @@ export default {
   right 0
 
   .classify-right
+    display flex
+    flex-wrap wrap
     flex 1
+    width 100%
+    height 50%
+    text-align center
+    .classify-item
+      width 33.33%
+      img
+        margin-left 25px
+        display block
+        width 50px
+      p
+        display block
+        font-size 12px
+        text-algin center
 </style>

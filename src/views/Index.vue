@@ -8,7 +8,11 @@
         background="transparent"
         shape="round"
       />
-      <swiper :swipeList="swipeList" :autoplay="3000" indicatorColor="white" />
+      <swiper
+        :swiperList="swiperList"
+        :autoplay="3000"
+        indicatorColor="white"
+      />
     </div>
 
     <van-grid :border="false">
@@ -31,10 +35,22 @@
     </van-grid>
 
     <section>
-      <article></article>
-      <article></article>
-      <article></article>
-      <article></article>
+      <article class="colorA">
+        <span>全球奶粉</span>
+        <img src="../assets/images/naifen.jpg" alt="" />
+      </article>
+      <article class="colorB">
+        <span>尿不湿</span>
+        <img src="../assets/images/niaobushi.jpg" alt="" />
+      </article>
+      <article class="colorC">
+        <span>营养辅食</span>
+        <img src="../assets/images/fushi.jpg" alt="" />
+      </article>
+      <article class="colorD">
+        <span>宝宝洗护</span>
+        <img src="../assets/images/xihu.jpg" alt="" />
+      </article>
     </section>
 
     <div class="recommend">
@@ -53,6 +69,7 @@
           :title="item.productName"
           :thumb="item.imgUrl"
           :origin-price="item.originalPrice"
+          @click="goToDetail(item.productId)"
         />
       </van-list>
     </div>
@@ -61,50 +78,68 @@
 
 <script>
 import Swiper from "@/components/Swiper";
-// import axios from "axios";
-import { getBannerListApi, getRecommendListApi } from "../utils/api";
 
 export default {
   data() {
     return {
+      value: "",
       count: 4,
       page: 1,
-      swipeList: [],
-      recommendList: [],
-      value: "",
       loading: false,
-      finished: false
+      finished: true
     };
   },
   components: {
     Swiper
   },
   mounted() {
-    this.getBannerList();
-    this.getRecommendList();
-  },
-  methods: {
-    async getBannerList() {
-      const res = await getBannerListApi({ a: 1 });
-      this.swipeList = res.result.list;
-    },
-    async getRecommendList() {
-      const res = await getRecommendListApi({
+    this.$store.dispatch("getBannerList");
+    this.$store
+      .dispatch("getRecommendList", {
         count: this.count,
         page: this.page
+      })
+      .then(length => {
+        this.page++;
+        this.loading = false;
+        if (length < this.count) {
+          this.finished = true;
+        } else {
+          this.finished = false;
+        }
       });
-      this.recommendList = [...this.recommendList, ...res.result.list];
-      this.page++;
-      this.loading = false;
-      if (res.result.list.length < this.count) {
-        this.finished = true;
-      } else {
-        this.finished = false;
-      }
+  },
+  computed: {
+    swiperList() {
+      return this.$store.state.home.swiperList;
     },
-    onLoad() {
-      this.getRecommendList();
+    recommendList() {
+      return this.$store.state.home.recommendList;
     }
+  },
+  methods: {
+    onLoad() {
+      this.$store
+        .dispatch("getRecommendList", {
+          count: this.count,
+          page: this.page
+        })
+        .then(length => {
+          this.page++;
+          this.loading = false;
+          if (length < this.count) {
+            this.finished = true;
+          } else {
+            this.finished = false;
+          }
+        });
+    },
+    goToDetail(id) {
+      this.$router.push("./detail/" + id);
+    }
+  },
+  beforeDestory() {
+    this.$store.commit("clearRecommendList");
   }
 };
 </script>
@@ -118,8 +153,24 @@ section
   article
     width 172px
     height 100px
-    background pink
     margin-bottom 20px
+    font-size 16px
+    font-weight 900
+    padding 10px 0 0 10px
+    position relative
+    img
+      position absolute
+      width 60px
+      right 10px
+      bottom 10px
+  .colorA
+    background rgb(255,246,227)
+  .colorB
+    background rgb(252,255,239)
+  .colorC
+    background rgb(255,243,245)
+  .colorD
+    background rgb(246,248,253)
 
 .recommend
   padding 0 10px

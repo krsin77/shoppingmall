@@ -1,5 +1,5 @@
 <template>
   <div>
-    购物车
+    <van-nav-bar title="购物车" :fixed="true" :placeholder="true" />
   </div>
 </template>
