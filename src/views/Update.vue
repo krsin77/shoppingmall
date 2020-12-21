@@ -9,7 +9,12 @@
     />
 
     <van-cell-group>
-      <van-field label="头像" is-link input-align="right" right-icon="" />
+      <van-field
+        label="头像"
+        is-link
+        input-align="right"
+        :right-icon="info.avatarImg"
+      />
       <van-field
         label="账号"
         is-link
@@ -20,7 +25,7 @@
       <van-field
         v-model="name"
         label="姓名"
-        placeholder="未填写"
+        :placeholder="info.nickName"
         is-link
         input-align="right"
         @blur="inputBlur"
